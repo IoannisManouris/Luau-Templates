@@ -4,10 +4,10 @@ local RunService = game:GetService("RunService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local remote_event = ReplicatedStorage:WaitForChild("RemoteEvent")
-local bindable_event = ReplicatedStorage:WaitForChild("BindableEvent")
+local remote_event = script:WaitForChild("RemoteEvent")
+local bindable_event = script:WaitForChild("BindableEvent")
 
-local remote_function = ReplicatedStorage:WaitForChild("RemoteFunction")
+local remote_function = script:WaitForChild("RemoteFunction")
 
 local remote_callbacks = {}
 local bindable_callbacks = {}
@@ -40,14 +40,18 @@ end
 
 function SignalService:FireServer(event_name: string, data: any)
 	if is_server == true then return end
-	
-	remote_event:FireServer(event_name, data)
+
+	pcall(function()
+		remote_event:FireServer(event_name, data)
+	end)
 end
 
 function SignalService:FireClient(player: Player, event_name: string, data: any)
 	if is_server == false then return end
 
-	remote_event:FireClient(player, event_name, data)
+	pcall(function()
+		remote_event:FireClient(player, event_name, data)
+	end)
 end
 
 function SignalService:FireAllClients(event_name: string, data: any)
@@ -76,7 +80,7 @@ if is_server == true then
 		if callback == nil then return end
 		callback(player, data)
 	end)
-	
+
 	remote_function.OnServerInvoke = function(player: Player, function_name: string, data: any)
 		local callback = remote_callbacks[function_name]
 		if callback == nil then return end
@@ -88,7 +92,7 @@ else
 		if callback == nil then return end
 		callback(data)
 	end)
-	
+
 	remote_function.OnClientInvoke = function(function_name: string, data: any)
 		local callback = remote_callbacks[function_name]
 		if callback == nil then return end
