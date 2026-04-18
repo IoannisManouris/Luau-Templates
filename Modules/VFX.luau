@@ -1,6 +1,6 @@
 local vfx = {}
 
-function vfx:Emit(attachment: Attachment, speed: number)
+function vfx:Emit(attachment: Attachment&Part, speed: number)
 	if speed == nil then speed = 1 end
 
 	for _, effect in attachment:GetChildren() do
@@ -23,7 +23,7 @@ function vfx:Emit(attachment: Attachment, speed: number)
 	end
 end
 
-function vfx:SetColour(attachment: Attachment, colour_sequence: ColorSequence)
+function vfx:SetColour(attachment: Attachment&Part, colour_sequence: ColorSequence)
 	for _, effect in attachment:GetChildren() do
 		if effect:IsA("ParticleEmitter") then
 			effect.Color = colour_sequence
@@ -31,8 +31,8 @@ function vfx:SetColour(attachment: Attachment, colour_sequence: ColorSequence)
 	end
 end
 
-function vfx:Enable(attachment: Attachment, enabled: boolean)
-	for _, effect in attachment:GetChildren() do
+function vfx:Enable(attachment: Attachment&Part, enabled: boolean)
+	for _, effect in attachment:GetDescendants() do
 		if effect:IsA("ParticleEmitter") then
 			effect.Enabled = enabled
 		end
