@@ -8,7 +8,7 @@ local function PlayerAdded(player: Player)
 	local leaderstats = Instance.new("Folder", player) do
 		leaderstats.Name = "leaderstats"
 		
-		local drachma = Instance.new("NumberValue", player) do
+		local drachma = Instance.new("NumberValue", leaderstats) do
 			drachma.Name = "Drachma"
 			
 			local drachma_data = nil
@@ -19,7 +19,7 @@ local function PlayerAdded(player: Player)
 			drachma.Value = drachma_data or 0
 		end
 		
-		local kills = Instance.new("IntValue", player) do
+		local kills = Instance.new("IntValue", leaderstats) do
 			kills.Name = "Kills"
 
 			local kill_data = nil
