@@ -37,7 +37,7 @@ function animations:OpenFrame(frame: Frame, ignore_other: boolean)
 			animations:CloseFrame(frame_to_close)
 			if frame_to_close == frame then return end
 		end
-		
+
 		repeat 
 			task.wait() 
 		until frame_closing == false
@@ -93,7 +93,7 @@ function animations:SetUpButton(buttons, no_anims: boolean&nil)
 	if no_anims == nil then no_anims = false end
 	for i, button in buttons do
 		original_size[button] = button.Size
-		
+
 		if no_anims == false then
 			button.MouseEnter:Connect(function()
 				onHover(button)
